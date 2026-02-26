@@ -1,25 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Teacher Dashboard</title>
+    <title>ISAFMS Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="login-container">
-    <h2>Welcome Teacher 👋</h2>
+<div class="container">
 
-    <button onclick="goAttendance()">Attendance</button>
-    <button onclick="logout()">Logout</button>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>ISAFMS</h2>
+        <ul>
+            <li onclick="showHome()">🏠 Dashboard</li>
+            <li onclick="goAttendance()">📊 Attendance</li>
+            <li>📝 Assignments</li>
+            <li>📢 Announcements</li>
+            <li onclick="logout()">🚪 Logout</li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+        <h1>Welcome, Teacher 👋</h1>
+
+        <div class="cards">
+            <div class="card">
+                <h3>Total Students</h3>
+                <p>60</p>
+            </div>
+
+            <div class="card">
+                <h3>Today Present</h3>
+                <p>45</p>
+            </div>
+
+            <div class="card">
+                <h3>Attendance %</h3>
+                <p>75%</p>
+            </div>
+        </div>
+
+    </div>
+
 </div>
 
 <script>
-function goAttendance() {
-    window.location.href = "attendance.html";
+function goAttendance(){
+    window.location.href="attendance.html";
 }
 
-function logout() {
-    window.location.href = "index.html";
+function logout(){
+    window.location.href="index.html";
 }
 </script>
 
