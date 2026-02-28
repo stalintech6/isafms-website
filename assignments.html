@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Assignments</title>
+<style>
+body{font-family:Arial;background:#f4f6f9;padding:20px}
+h1{text-align:center}
+form{background:#fff;padding:20px;width:300px;margin:auto;box-shadow:0 0 10px #ccc;border-radius:10px}
+input,button{width:100%;padding:8px;margin:8px 0}
+button{background:#2c3e50;color:white;border:none}
+table{width:90%;margin:20px auto;border-collapse:collapse;background:#fff}
+th,td{border:1px solid #ccc;padding:8px;text-align:center}
+th{background:#2c3e50;color:white}
+.late{color:red;font-weight:bold}
+.ontime{color:green;font-weight:bold}
+a{display:block;text-align:center;margin:20px}
+</style>
+</head>
+<body>
+
+<h1>Assignments</h1>
+
+<form id="form">
+<input type="text" id="name" placeholder="Student Name" required>
+<input type="text" id="title" placeholder="Title" required>
+<input type="datetime-local" id="deadline" required>
+<button type="submit">Submit</button>
+</form>
+
+<table>
+<tr>
+<th>Name</th>
+<th>Title</th>
+<th>Deadline</th>
+<th>Status</th>
+</tr>
+<tbody id="data"></tbody>
+</table>
+
+<a href="index.html">Back to Home</a>
+
+<script>
+let assignments=JSON.parse(localStorage.getItem("assignments"))||[];
+
+function save(){
+localStorage.setItem("assignments",JSON.stringify(assignments));
+}
+
+function display(){
+let tbody=document.getElementById("data");
+tbody.innerHTML="";
+assignments.forEach(a=>{
+let now=new Date();
+let d=new Date(a.deadline);
+let late=now>d;
+tbody.innerHTML+=`<tr>
+<td>${a.name}</td>
+<td>${a.title}</td>
+<td>${d.toLocaleString()}</td>
+<td class="${late?'late':'ontime'}">
+${late?'Late ⚠️':'On Time ✅'}
+</td>
+</tr>`;
+});
+}
+
+document.getElementById("form").addEventListener("submit",function(e){
+e.preventDefault();
+assignments.push({
+name:document.getElementById("name").value,
+title:document.getElementById("title").value,
+deadline:document.getElementById("deadline").value
+});
+save();
+display();
+this.reset();
+});
+
+display();
+</script>
+
+</body>
+</html>
