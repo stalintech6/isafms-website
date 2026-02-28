@@ -1,161 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ISAFMS - Assignment System</title>
-    <style>
-        body {
-            font-family: Arial;
-            background: #f4f6f9;
-            padding: 20px;
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-        form {
-            background: white;
-            padding: 20px;
-            width: 350px;
-            margin: auto;
-            box-shadow: 0 0 10px #ccc;
-            border-radius: 10px;
-        }
-
-        input, button {
-            width: 100%;
-            padding: 8px;
-            margin: 8px 0;
-        }
-
-        button {
-            background: #2c3e50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        table {
-            width: 90%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            background: white;
-        }
-
-        th, td {
-            border: 1px solid #ccc;
-            padding: 8px;
-            text-align: center;
-        }
-
-        th {
-            background: #2c3e50;
-            color: white;
-        }
-
-        .late {
-            color: red;
-            font-weight: bold;
-        }
-
-        .ontime {
-            color: green;
-            font-weight: bold;
-        }
-
-        .dashboard {
-            text-align: center;
-            margin: 20px;
-            font-weight: bold;
-        }
-    </style>
+    <title>Student Management</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>ISAFMS Assignment Submission</h1>
+    <h1>Student Management System</h1>
 
-<form id="assignmentForm">
-    <input type="text" id="studentName" placeholder="Student Name" required>
-    <input type="text" id="title" placeholder="Assignment Title" required>
-    <input type="datetime-local" id="deadline" required>
-    <button type="submit">Submit</button>
-</form>
-
-<div class="dashboard">
-    Total: <span id="total">0</span> |
-    On Time: <span id="ontime">0</span> |
-    Late: <span id="late">0</span>
-</div>
-
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Title</th>
-            <th>Deadline</th>
-            <th>Status</th>
-        </tr>
-    </thead>
-    <tbody id="tableBody"></tbody>
-</table>
-
-<script>
-let assignments = JSON.parse(localStorage.getItem("assignments")) || [];
-
-function saveData() {
-    localStorage.setItem("assignments", JSON.stringify(assignments));
-}
-
-function updateTable() {
-    let tbody = document.getElementById("tableBody");
-    tbody.innerHTML = "";
-
-    let total = assignments.length;
-    let ontime = 0;
-    let late = 0;
-
-    assignments.forEach(a => {
-        let now = new Date();
-        let deadline = new Date(a.deadline);
-        let isLate = now > deadline;
-
-        if(isLate) late++;
-        else ontime++;
-
-        let row = `<tr>
-            <td>${a.name}</td>
-            <td>${a.title}</td>
-            <td>${deadline.toLocaleString()}</td>
-            <td class="${isLate ? 'late' : 'ontime'}">
-                ${isLate ? "Late ⚠️" : "On Time ✅"}
-            </td>
-        </tr>`;
-
-        tbody.innerHTML += row;
-    });
-
-    document.getElementById("total").innerText = total;
-    document.getElementById("ontime").innerText = ontime;
-    document.getElementById("late").innerText = late;
-}
-
-document.getElementById("assignmentForm").addEventListener("submit", function(e){
-    e.preventDefault();
-
-    let name = document.getElementById("studentName").value;
-    let title = document.getElementById("title").value;
-    let deadline = document.getElementById("deadline").value;
-
-    assignments.push({ name, title, deadline });
-
-    saveData();
-    updateTable();
-
-    this.reset();
-});
-
-updateTable();
-</script>
+    <div class="menu">
+        <a href="attendance.html">Attendance</a>
+        <a href="assignments.html">Assignments</a>
+    </div>
 
 </body>
 </html>
