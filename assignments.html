@@ -7,12 +7,13 @@ body{font-family:Arial;background:#f4f6f9;padding:20px}
 h1{text-align:center}
 form{background:#fff;padding:20px;width:300px;margin:auto;box-shadow:0 0 10px #ccc;border-radius:10px}
 input,button{width:100%;padding:8px;margin:8px 0}
-button{background:#2c3e50;color:white;border:none}
+button{background:#2c3e50;color:white;border:none;cursor:pointer}
 table{width:90%;margin:20px auto;border-collapse:collapse;background:#fff}
 th,td{border:1px solid #ccc;padding:8px;text-align:center}
 th{background:#2c3e50;color:white}
 .late{color:red;font-weight:bold}
 .ontime{color:green;font-weight:bold}
+.delete-btn{background:red;color:white;padding:5px 10px;border:none;cursor:pointer}
 a{display:block;text-align:center;margin:20px}
 </style>
 </head>
@@ -28,37 +29,54 @@ a{display:block;text-align:center;margin:20px}
 </form>
 
 <table>
+<thead>
 <tr>
 <th>Name</th>
 <th>Title</th>
 <th>Deadline</th>
 <th>Status</th>
+<th>Action</th>
 </tr>
+</thead>
 <tbody id="data"></tbody>
 </table>
 
 <a href="index.html">Back to Home</a>
 
 <script>
-let assignments=JSON.parse(localStorage.getItem("assignments"))||[];
+let assignments = JSON.parse(localStorage.getItem("assignments")) || [];
 
 function save(){
-localStorage.setItem("assignments",JSON.stringify(assignments));
+localStorage.setItem("assignments", JSON.stringify(assignments));
+}
+
+function deleteAssignment(index){
+if(confirm("Are you sure you want to delete?")){
+assignments.splice(index,1);
+save();
+display();
+}
 }
 
 function display(){
-let tbody=document.getElementById("data");
-tbody.innerHTML="";
-assignments.forEach(a=>{
-let now=new Date();
-let d=new Date(a.deadline);
-let late=now>d;
-tbody.innerHTML+=`<tr>
+let tbody = document.getElementById("data");
+tbody.innerHTML = "";
+
+assignments.forEach((a,index)=>{
+let now = new Date();
+let d = new Date(a.deadline);
+let late = now > d;
+
+tbody.innerHTML += `
+<tr>
 <td>${a.name}</td>
 <td>${a.title}</td>
 <td>${d.toLocaleString()}</td>
 <td class="${late?'late':'ontime'}">
 ${late?'Late ⚠️':'On Time ✅'}
+</td>
+<td>
+<button class="delete-btn" onclick="deleteAssignment(${index})">Delete</button>
 </td>
 </tr>`;
 });
@@ -66,11 +84,13 @@ ${late?'Late ⚠️':'On Time ✅'}
 
 document.getElementById("form").addEventListener("submit",function(e){
 e.preventDefault();
+
 assignments.push({
 name:document.getElementById("name").value,
 title:document.getElementById("title").value,
 deadline:document.getElementById("deadline").value
 });
+
 save();
 display();
 this.reset();
