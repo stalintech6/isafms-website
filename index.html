@@ -6,16 +6,25 @@
 </head>
 <body>
 
-<div class="login-container">
-    <h1>ISAFMS</h1>
-    <p>Faculty Management System</p>
+<script>
+function login() {
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
 
-    <input type="email" id="email" placeholder="Enter Email">
-    <input type="password" id="password" placeholder="Enter Password">
+    // Teacher Login
+    if(email === "admin@gmail.com" && password === "1234") {
+        window.location.href = "dashboard.html";
+    }
 
-    <button onclick="login()">Login</button>
-</div>
+    // Student Login
+    else if(email === "student@gmail.com" && password === "1234") {
+        window.location.href = "student.html";
+    }
 
-<script src="script.js"></script>
+    else {
+        alert("Invalid Login Details");
+    }
+}
+</script>
 </body>
 </html>
