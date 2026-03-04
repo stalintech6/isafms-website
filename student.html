@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Portal</title>
+    <style>
+        body{
+            font-family: Arial;
+            background:#f4f6f9;
+            padding:20px;
+        }
+
+        h1{
+            text-align:center;
+        }
+
+        .box{
+            background:white;
+            padding:15px;
+            margin:15px 0;
+            border-radius:8px;
+            box-shadow:0 0 5px #ccc;
+        }
+
+        button{
+            padding:8px 15px;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🎓 Student Portal</h1>
+
+<h2>📢 Announcements</h2>
+<div id="announcementList"></div>
+
+<h2>📝 Assignments</h2>
+<ul id="assignmentList"></ul>
+
+<h2>📊 Attendance</h2>
+<p>Attendance data available in teacher panel (static demo)</p>
+
+<br>
+<button onclick="goBack()">⬅ Back</button>
+
+<script>
+// Load announcements
+let announcements = JSON.parse(localStorage.getItem("announcements")) || [];
+let announcementDiv = document.getElementById("announcementList");
+
+announcements.forEach(a=>{
+    announcementDiv.innerHTML += `
+    <div class="box">
+        <p>${a.text}</p>
+        <small>${a.date}</small>
+    </div>`;
+});
+
+// Load assignments
+let assignments = JSON.parse(localStorage.getItem("assignments")) || [];
+let assignmentList = document.getElementById("assignmentList");
+
+assignments.forEach(a=>{
+    assignmentList.innerHTML += `<li>${a}</li>`;
+});
+
+function goBack(){
+    window.location.href="index.html";
+}
+</script>
+
+</body>
+</html>
