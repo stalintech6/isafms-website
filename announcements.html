@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Announcements</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .announcement-box{
+            background:white;
+            padding:15px;
+            margin:10px 0;
+            border-radius:8px;
+            box-shadow:0 0 5px #ccc;
+        }
+        textarea{
+            width:100%;
+            padding:10px;
+            margin-bottom:10px;
+        }
+        button{
+            padding:8px 15px;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1 style="text-align:center;">📢 Announcements</h1>
+
+<div style="width:60%; margin:auto;">
+
+    <textarea id="announcementInput" rows="4" placeholder="Enter announcement..."></textarea>
+    <button onclick="addAnnouncement()">Add Announcement</button>
+
+    <hr>
+
+    <div id="announcementList"></div>
+
+    <br>
+    <button onclick="goBack()">⬅ Back to Dashboard</button>
+
+</div>
+
+<script>
+let announcements = JSON.parse(localStorage.getItem("announcements")) || [];
+
+function save(){
+    localStorage.setItem("announcements", JSON.stringify(announcements));
+}
+
+function display(){
+    let list = document.getElementById("announcementList");
+    list.innerHTML="";
+
+    announcements.forEach((a,index)=>{
+        list.innerHTML += `
+        <div class="announcement-box">
+            <p>${a.text}</p>
+            <small>${a.date}</small>
+            <br>
+            <button onclick="deleteAnnouncement(${index})">Delete</button>
+        </div>`;
+    });
+}
+
+function addAnnouncement(){
+    let text = document.getElementById("announcementInput").value;
+    if(text.trim() === "") return alert("Enter announcement");
+
+    announcements.unshift({
+        text:text,
+        date:new Date().toLocaleString()
+    });
+
+    save();
+    display();
+    document.getElementById("announcementInput").value="";
+}
+
+function deleteAnnouncement(index){
+    announcements.splice(index,1);
+    save();
+    display();
+}
+
+function goBack(){
+    window.location.href="dashboard.html";
+}
+
+display();
+</script>
+
+</body>
+</html>
