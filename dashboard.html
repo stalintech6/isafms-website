@@ -7,7 +7,24 @@
         body{
             margin:0;
             font-family: Arial, sans-serif;
-            background:#f4f6f9;
+
+            background-image: url('college.jpg'); /* image name same undali */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        /* Dark overlay */
+        body::before{
+            content:"";
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            background: rgba(0,0,0,0.5);
+            z-index:-1;
         }
 
         .container{
@@ -48,6 +65,7 @@
         .main{
             flex:1;
             padding:30px;
+            color:white;
         }
 
         .cards{
@@ -58,11 +76,12 @@
 
         .card{
             flex:1;
-            background:white;
+            background: rgba(255,255,255,0.9);
             padding:20px;
             border-radius:10px;
-            box-shadow:0 4px 10px rgba(0,0,0,0.1);
+            box-shadow:0 4px 15px rgba(0,0,0,0.4);
             text-align:center;
+            color:black;
         }
 
         .card h3{
@@ -88,7 +107,7 @@
 
     <!-- Main Content -->
     <div class="main">
-        <h1>Welcome user👋</h1>
+        <h1>Welcome user 👋</h1>
 
         <div class="cards">
             <div class="card">
